@@ -22,6 +22,8 @@
 #include <iostream>
 #include <string>
 #include <fstream>
+#include <algorithm>
+#include <iterator>
 #include <vector>
 #include "puzzle.h"
 
@@ -38,41 +40,101 @@ void Puzzle::set_height() {
 
 void Puzzle::load_puzzle() {
     puzzle_txt.open("puzzle.txt");
-    char separator = 0;
+    char temp_c = 0;
     int k = 0;
     while (puzzle_txt.good()) {
         vector_puzzle.push_back(std::vector <char>());
-         puzzle_txt.get(separator);
+        puzzle_txt.get(temp_c);
             while (puzzle_txt.good()) {
-                
-                if (separator == '\n') {
+                if (temp_c == '\n') {
                     break;
                 }
-                vector_puzzle[k].push_back(separator);
-                puzzle_txt.get(separator);
+                vector_puzzle[k].push_back(temp_c);
+                puzzle_txt.get(temp_c);
             }
         k++;
     }
-    puzzle_txt.clear();
-    std::string temp;
+    std::string temp_s;
     height_puzzle = 0;
-    while (getline(puzzle_txt, temp)) {
+    puzzle_txt.clear();
+    puzzle_txt.seekg(0);
+    while (getline(puzzle_txt, temp_s)) {
         height_puzzle++;
     }
-    //cout << height_puzzle << std::endl;
+    //std::cout << height_puzzle << std::endl;
     width_puzzle = vector_puzzle[0].size();
     //cout << width_puzzle << " " << height_puzzle << endl;
-    std::cout << vector_puzzle[5][8] << std::endl;
-    std::cout << vector_puzzle.at(5).at(8) << std::endl;
+    //std::cout << vector_puzzle[5][8] << std::endl;
+    //std::cout << vector_puzzle.at(5).at(8) << std::endl;
     puzzle_txt.close();
 }
 
+void Puzzle::load_wordlist() {
+    wordlist_txt.open("wordlist.txt");
+    char temp;
+    int k = 0;
+    while (wordlist_txt.good()) {
+        vector_wordlist.push_back(std::vector <char>());
+        wordlist_txt.get(temp);
+            while (wordlist_txt.good()) {
+                if (temp == '\n') {
+                    break;
+                }
+                vector_wordlist[k].push_back(temp);
+                wordlist_txt.get(temp);
+            }
+        k++;
+    }
+    std::string temp_s;
+    height_wordlist = 0;
+    wordlist_txt.clear();
+    wordlist_txt.seekg(0);
+    while (getline(wordlist_txt, temp_s)) {
+        height_wordlist++;
+    }
+    wordlist_txt.close();
+}
+/*
 void Puzzle::print_puzzle() {
     for (int h = 0; h < height_puzzle; h++) {
         for (int w = 0; w < width_puzzle; w++) {
             std::cout << vector_puzzle[h][w];
         }
         std::cout << std::endl;
+    }
+}
+*/
+
+void Puzzle::print_puzzle() {
+    std::ostream_iterator<char> screen(std::cout);
+    for (int l = 0; l < height_puzzle; l++) {
+        copy(vector_puzzle[l].begin(), vector_puzzle[l].end(), screen);
+        std::cout << std::endl;
+    }
+}
+    
+void Puzzle::replace_words_h() {
+    unsigned int a = 0;
+    for (int e = 0; e < height_wordlist; e++) {
+        for (int c = 0; c < height_puzzle; c++) {
+            for (int d = 0; d < width_puzzle; d++) {
+                if (vector_puzzle[c][d] == vector_wordlist[e][a]) {
+                    a++;
+                    if (a == vector_wordlist[e].size()){
+                        char i = 'a', j = 'A';
+                        for (int b = 0; b < 27; b++) {
+                            replace(vector_puzzle[c].begin() + d - a + 1, vector_puzzle[c].begin() + d + 1, i, j);
+                            i++;
+                            j++;
+                        }
+                    }
+                }
+                else {
+                    d -= a;
+                    a = 0;                    
+                }
+            }
+        }
     }
 }
 

@@ -26,14 +26,18 @@
 class Puzzle {
     private:
         std::vector <std::vector<char> > vector_puzzle;
-        std::vector<std::string> word_bank;
+        std::vector <std::vector<char> > vector_wordlist;
+        int height_wordlist;
         int width_puzzle;
         int height_puzzle;
         std::ifstream puzzle_txt;
+        std::ifstream wordlist_txt;
     public:
         void set_height();
         void load_puzzle();
+        void load_wordlist();
         void print_puzzle();
+        void replace_words_h();
 };
 
 #endif /* PUZZLE_H */ 

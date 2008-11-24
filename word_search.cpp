@@ -19,10 +19,11 @@
  *      MA 02110-1301, USA.
  */
 
-
 #include <iostream>
 #include <string>
 #include <fstream>
+#include <algorithm>
+#include <iterator>
 #include <vector>
 
 #include "puzzle.h"
@@ -30,7 +31,9 @@
 int main() {
     Puzzle aPuzzle;
     aPuzzle.load_puzzle();
-    aPuzzle.set_height();
+    aPuzzle.load_wordlist();
+    aPuzzle.replace_words_h();
+    //aPuzzle.set_height();
     aPuzzle.print_puzzle();
     return 0;
 }
