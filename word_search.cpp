@@ -33,6 +33,8 @@ int main() {
     aPuzzle.load_puzzle();
     aPuzzle.load_wordlist();
     aPuzzle.replace_words_h();
+    aPuzzle.reverse_wordlist();
+    aPuzzle.replace_words_h();
     //aPuzzle.set_height();
     aPuzzle.print_puzzle();
     return 0;

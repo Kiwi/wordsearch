@@ -27,6 +27,7 @@
 #include <vector>
 #include "puzzle.h"
 
+/*
 void Puzzle::set_height() {
     puzzle_txt.open("puzzle.txt");
     std::string temp;
@@ -37,6 +38,7 @@ void Puzzle::set_height() {
     std::cout << height_puzzle << std::endl;
     puzzle_txt.close();
 }
+*/
 
 void Puzzle::load_puzzle() {
     puzzle_txt.open("puzzle.txt");
@@ -67,6 +69,7 @@ void Puzzle::load_puzzle() {
     //std::cout << vector_puzzle[5][8] << std::endl;
     //std::cout << vector_puzzle.at(5).at(8) << std::endl;
     puzzle_txt.close();
+    vector_puzzle_copy = vector_puzzle;
 }
 
 void Puzzle::load_wordlist() {
@@ -106,9 +109,9 @@ void Puzzle::print_puzzle() {
 */
 
 void Puzzle::print_puzzle() {
-    std::ostream_iterator<char> screen(std::cout);
+    std::ostream_iterator<char> screen(std::cout, " ");
     for (int l = 0; l < height_puzzle; l++) {
-        copy(vector_puzzle[l].begin(), vector_puzzle[l].end(), screen);
+        copy(vector_puzzle_copy[l].begin(), vector_puzzle_copy[l].end(), screen);
         std::cout << std::endl;
     }
 }
@@ -123,7 +126,7 @@ void Puzzle::replace_words_h() {
                     if (a == vector_wordlist[e].size()){
                         char i = 'a', j = 'A';
                         for (int b = 0; b < 27; b++) {
-                            replace(vector_puzzle[c].begin() + d - a + 1, vector_puzzle[c].begin() + d + 1, i, j);
+                            replace(vector_puzzle_copy[c].begin() + d - a + 1, vector_puzzle_copy[c].begin() + d + 1, i, j);
                             i++;
                             j++;
                         }
@@ -138,3 +141,8 @@ void Puzzle::replace_words_h() {
     }
 }
 
+void Puzzle::reverse_wordlist() {
+    for (int n = 0; n < height_wordlist; n++) {
+        reverse(vector_wordlist[n].begin(), vector_wordlist[n].end());
+    }
+}
