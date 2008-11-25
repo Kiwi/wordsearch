@@ -40,6 +40,7 @@ class Puzzle {
         void print_puzzle();
         void replace_words_h();
         void reverse_wordlist();
+        void replace_words_v();
 };
 
 #endif /* PUZZLE_H */ 

@@ -25,6 +25,7 @@
 #include <algorithm>
 #include <iterator>
 #include <vector>
+#include <cctype>
 #include "puzzle.h"
 
 /*
@@ -124,6 +125,7 @@ void Puzzle::replace_words_h() {
                 if (vector_puzzle[c][d] == vector_wordlist[e][a]) {
                     a++;
                     if (a == vector_wordlist[e].size()){
+                        a = 0;
                         char i = 'a', j = 'A';
                         for (int b = 0; b < 27; b++) {
                             replace(vector_puzzle_copy[c].begin() + d - a + 1, vector_puzzle_copy[c].begin() + d + 1, i, j);
@@ -146,3 +148,30 @@ void Puzzle::reverse_wordlist() {
         reverse(vector_wordlist[n].begin(), vector_wordlist[n].end());
     }
 }
+
+void Puzzle::replace_words_v() {
+    unsigned int a = 0;
+    for (int e = 0; e < height_wordlist; e++) {
+        for (int c = 0; c < width_puzzle; c++) {
+            for (int d = 0; d < height_puzzle; d++) {
+                if (vector_puzzle[d][c] == vector_wordlist[e][a]) {
+                    a++;
+                    if (a == vector_wordlist[e].size()) {
+                        for (unsigned int y = 0; y < a; y++) {
+                            vector_puzzle_copy[d-y][c] = std::toupper(vector_puzzle_copy[d-y][c]);
+                        }
+                        a = 0;
+                    }
+                }
+                else {
+                    //d -= a;
+                    a = 0;
+                }
+            }
+        }
+    }
+}
+
+
+
+

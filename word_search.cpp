@@ -25,6 +25,7 @@
 #include <algorithm>
 #include <iterator>
 #include <vector>
+#include <cctype>
 
 #include "puzzle.h"
 
@@ -33,9 +34,11 @@ int main() {
     aPuzzle.load_puzzle();
     aPuzzle.load_wordlist();
     aPuzzle.replace_words_h();
+    aPuzzle.replace_words_v();
     aPuzzle.reverse_wordlist();
     aPuzzle.replace_words_h();
     //aPuzzle.set_height();
+    aPuzzle.replace_words_v();
     aPuzzle.print_puzzle();
     return 0;
 }
