@@ -26,6 +26,7 @@
 #include <iterator>
 #include <vector>
 #include <cctype>
+#include <cstring>
 
 #include "puzzle.h"
 
@@ -37,7 +38,6 @@ int main() {
     aPuzzle.replace_words_v();
     aPuzzle.reverse_wordlist();
     aPuzzle.replace_words_h();
-    //aPuzzle.set_height();
     aPuzzle.replace_words_v();
     aPuzzle.print_puzzle();
     return 0;

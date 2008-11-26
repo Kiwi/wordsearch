@@ -28,9 +28,9 @@ class Puzzle {
         std::vector <std::vector<char> > vector_puzzle;
         std::vector <std::vector<char> > vector_puzzle_copy;
         std::vector <std::vector<char> > vector_wordlist;
-        int height_wordlist;
-        int width_puzzle;
-        int height_puzzle;
+        std::size_t height_wordlist;
+        std::size_t width_puzzle;
+        std::size_t height_puzzle;
         std::ifstream puzzle_txt;
         std::ifstream wordlist_txt;
     public:
